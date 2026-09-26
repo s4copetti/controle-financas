@@ -1,8 +1,8 @@
-# FinanceWallet 💳
+# FinanceWallet 
 
-Aplicação web full-stack de controle de finanças pessoais, desenvolvida como projeto final da disciplina de Next.js. O objetivo do trabalho é aplicar, na prática, os conceitos de arquitetura moderna do **Next.js (App Router)**, integrando frontend e backend em um único projeto, com autenticação e persistência de dados em nuvem via **Supabase**.
+Aplicação web full-stack de controle de finanças pessoais, desenvolvida como projeto final da disciplina de Desenvolvimento Web. O objetivo do trabalho é aplicar, na prática, os conceitos de arquitetura moderna do **Next.js (App Router)**, integrando frontend e backend em um único projeto, com autenticação e persistência de dados em nuvem via **Supabase**.
 
-**🔗 Aplicação publicada:** [controle-financas.vercel.app](https://controle-financas-xxxx.vercel.app) <!-- substitua pelo link real do seu deploy -->
+**🔗 Aplicação publicada:** [controle-financas.vercel.app](https://controle-financas-amber.vercel.app/login)
 
 ---
 
@@ -16,30 +16,30 @@ Não há tela de cadastro: os usuários são criados previamente no painel do Su
 
 ## Funcionalidades
 
-- 🔐 **Autenticação** com e-mail e senha (Supabase Auth)
-- 🔒 **Dados isolados por usuário**, garantidos por Row Level Security no PostgreSQL
-- 💰 **Dashboard** com saldo atual, total de receitas e total de despesas
-- 🏷️ **Categorização** das transações (Alimentação, Transporte, Moradia, Saúde, Lazer, Compras, Salário, Investimentos, Outros)
-- 📊 **Gráfico de despesas por categoria** (donut chart em SVG, sem dependências externas)
-- 📜 **Histórico de transações** com diferenciação visual (cores e ícones) entre receitas e despesas
-- 🔍 **Busca e filtros** no histórico (por descrição, tipo e categoria)
-- ✏️ **Edição e exclusão** de transações, com modal de confirmação customizado
-- ✅ **Feedback visual** (toasts) após criar, editar ou excluir uma transação
-- 📱 **Design responsivo**, adaptado para desktop e mobile
+-  **Autenticação** com e-mail e senha (Supabase Auth)
+-  **Dados isolados por usuário**, garantidos por Row Level Security no PostgreSQL
+-  **Dashboard** com saldo atual, total de receitas e total de despesas
+-  **Categorização** das transações (Alimentação, Transporte, Moradia, Saúde, Lazer, Compras, Salário, Investimentos, Outros)
+-  **Gráfico de despesas por categoria** (donut chart em SVG, sem dependências externas)
+-  **Histórico de transações** com diferenciação visual (cores e ícones) entre receitas e despesas
+-  **Busca e filtros** no histórico (por descrição, tipo e categoria)
+-  **Edição e exclusão** de transações, com modal de confirmação customizado
+-  **Feedback visual** (toasts) após criar, editar ou excluir uma transação
+-  **Design responsivo**, adaptado para desktop e mobile
 
 ---
 
 ## Tecnologias utilizadas
 
-| Tecnologia | Função no projeto |
-|---|---|
+| Tecnologia                                     | Função no projeto |
+|
 | [Next.js 16](https://nextjs.org/) (App Router) | Framework principal: rotas, Server/Client Components e Server Actions |
-| [React](https://react.dev/) | Biblioteca de interface |
-| [TypeScript](https://www.typescriptlang.org/) | Tipagem estática |
-| [Tailwind CSS](https://tailwindcss.com/) | Estilização utilitária |
-| [Supabase](https://supabase.com/) | Backend: banco PostgreSQL + autenticação |
-| [Vercel](https://vercel.com/) | Hospedagem e deploy contínuo |
-| `next/font/google` | Fontes otimizadas (Playfair Display e Lora) |
+| [React](https://react.dev/)                    | Biblioteca de interface |
+| [TypeScript](https://www.typescriptlang.org/)  | Tipagem estática |
+| [Tailwind CSS](https://tailwindcss.com/)       | Estilização utilitária |
+| [Supabase](https://supabase.com/)              | Backend: banco PostgreSQL + autenticação |
+| [Vercel](https://vercel.com/)                  | Hospedagem e deploy contínuo |
+| `next/font/google`                             | Fontes otimizadas (Playfair Display e Lora) |
 
 ---
 
@@ -67,32 +67,32 @@ A separação de dados entre usuários acontece em duas camadas:
 controle-financas/
 ├── app/
 │   ├── actions/
-│   │   └── transacoes.ts          # Server Actions: criar, editar e excluir transações
+│   │   └── transacoes.ts               # Server Actions: criar, editar e excluir transações
 │   ├── components/
-│   │   ├── PasswordInput.tsx      # Campo de senha reutilizável (mostrar/ocultar)
-│   │   └── SuccessToast.tsx       # Notificação de sucesso após ações
+│   │   ├── PasswordInput.tsx           # Campo de senha reutilizável (mostrar/ocultar)
+│   │   └── SuccessToast.tsx            # Notificação de sucesso após ações
 │   ├── dashboard/
 │   │   ├── components/
-│   │   │   ├── CardTransacao.tsx      # Card de cada transação no histórico
-│   │   │   ├── GraficoDespesas.tsx    # Gráfico donut de despesas por categoria
+│   │   │   ├── CardTransacao.tsx       # Card de cada transação no histórico
+│   │   │   ├── GraficoDespesas.tsx     # Gráfico donut de despesas por categoria
 │   │   │   └── HistoricoTransacoes.tsx # Lista com busca e filtros
 │   │   ├── editar-transacao/[id]/
-│   │   │   └── page.tsx           # Tela de edição de transação
+│   │   │   └── page.tsx                # Tela de edição de transação
 │   │   ├── nova-transacao/
-│   │   │   └── page.tsx           # Tela de nova transação
-│   │   └── page.tsx                # Dashboard principal
+│   │   │   └── page.tsx                # Tela de nova transação
+│   │   └── page.tsx                    # Dashboard principal
 │   ├── login/
-│   │   ├── actions.ts              # Server Actions de login e logout
-│   │   └── page.tsx                 # Tela de login
-│   ├── icon.svg                     # Favicon
+│   │   ├── actions.ts                  # Server Actions de login e logout
+│   │   └── page.tsx                    # Tela de login
+│   ├── icon.svg                        # Favicon
 │   ├── layout.tsx
-│   └── page.tsx                     # Redireciona para /dashboard
+│   └── page.tsx                        # Redireciona para /dashboard
 ├── lib/
-│   ├── categorias.ts                # Lista de categorias disponíveis
+│   ├── categorias.ts                   # Lista de categorias disponíveis
 │   └── supabase/
-│       └── server.ts                # Cliente Supabase para uso no servidor
-├── proxy.ts                          # Proteção de rotas (redireciona não autenticados)
-└── .env.local                        # Variáveis de ambiente (não versionado)
+│       └── server.ts                   # Cliente Supabase para uso no servidor
+├── proxy.ts                            # Proteção de rotas (redireciona não autenticados)
+└── .env.local                          # Variáveis de ambiente (não versionado)
 ```
 
 ---
@@ -179,7 +179,10 @@ O deploy é feito na [Vercel](https://vercel.com/), com integração contínua a
 
 ---
 
-## Autor
+## Autores
 
+Amanda Pauletto
 Sabrina Copetti
-Trabalho final da disciplina de Next.js
+Tanise Müller
+
+Trabalho final da disciplina de Desenvolvimento Web
