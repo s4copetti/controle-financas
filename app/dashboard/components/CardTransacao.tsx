@@ -1,9 +1,11 @@
 "use client";
 
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { useState, useTransition } from 'react';
 import { Lora } from 'next/font/google';
 import { excluirTransacao } from '@/app/actions/transacoes';
+import { categoriaInfo } from '@/lib/categorias';
 
 const lora = Lora({
   subsets: ['latin'],
@@ -15,14 +17,17 @@ type Transacao = {
   descricao: string;
   valor: number;
   tipo: string;
+  categoria: string;
   criado_em: string;
 };
 
 export function CardTransacao({ data }: { data: Transacao }) {
+  const router = useRouter();
   const [modalAberto, setModalAberto] = useState(false);
   const [excluindo, startTransition] = useTransition();
 
   const isReceita = data.tipo === 'receita';
+  const cat = categoriaInfo(data.categoria);
   const valor = Number(data.valor).toLocaleString('pt-BR', {
     style: 'currency',
     currency: 'BRL',
@@ -36,6 +41,7 @@ export function CardTransacao({ data }: { data: Transacao }) {
     startTransition(async () => {
       await excluirTransacao(data.id);
       setModalAberto(false);
+      router.push('/dashboard?sucesso=excluida');
     });
   }
 
@@ -60,7 +66,13 @@ export function CardTransacao({ data }: { data: Transacao }) {
           </span>
           <div className="min-w-0">
             <p className={`${lora.className} text-slate-800 truncate`}>{data.descricao}</p>
-            <p className="text-xs text-slate-400 capitalize">{dataFormatada}</p>
+            <p className="text-xs text-slate-400 flex items-center gap-1.5">
+              <span className="capitalize">{dataFormatada}</span>
+              <span>·</span>
+              <span className="inline-flex items-center gap-1 bg-slate-100 px-1.5 py-0.5 rounded-full">
+                {cat.label}
+              </span>
+            </p>
           </div>
         </div>
 
@@ -93,16 +105,12 @@ export function CardTransacao({ data }: { data: Transacao }) {
         </div>
       </div>
 
-      {/* Modal de confirmação */}
       {modalAberto && (
         <div
           className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/40 backdrop-blur-sm p-4"
           onClick={() => !excluindo && setModalAberto(false)}
         >
-          <div
-            className="bg-white rounded-3xl shadow-2xl p-7 w-full max-w-sm"
-            onClick={(e) => e.stopPropagation()}
-          >
+          <div className="bg-white rounded-3xl shadow-2xl p-7 w-full max-w-sm" onClick={(e) => e.stopPropagation()}>
             <div className="flex justify-center mb-4">
               <span className="flex h-14 w-14 items-center justify-center rounded-2xl bg-rose-100 text-rose-500">
                 <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -110,14 +118,10 @@ export function CardTransacao({ data }: { data: Transacao }) {
                 </svg>
               </span>
             </div>
-
-            <h3 className="text-lg font-semibold text-slate-800 text-center mb-1">
-              Excluir transação?
-            </h3>
+            <h3 className="text-lg font-semibold text-slate-800 text-center mb-1">Excluir transação?</h3>
             <p className="text-sm text-slate-500 text-center mb-6">
               Tem certeza que deseja excluir <span className="font-medium text-slate-700">&quot;{data.descricao}&quot;</span>? Essa ação não pode ser desfeita.
             </p>
-
             <div className="flex gap-3">
               <button
                 type="button"

@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation';
 import { Playfair_Display } from 'next/font/google';
 import { createClient } from '@/lib/supabase/server';
 import { atualizarTransacao } from '@/app/actions/transacoes';
+import { CATEGORIAS } from '@/lib/categorias';
 
 const playfair = Playfair_Display({
   subsets: ['latin'],
@@ -54,9 +55,7 @@ export default async function EditarTransacaoPage({
                 <path d="M18.5 2.5a2.12 2.12 0 0 1 3 3L12 15l-4 1 1-4Z" />
               </svg>
             </span>
-            <div>
-              <h1 className={`${playfair.className} text-2xl text-rose-600`}>Editar transação</h1>
-            </div>
+            <h1 className={`${playfair.className} text-2xl text-rose-600`}>Editar transação</h1>
           </div>
 
           <form action={atualizarComId} className="flex flex-col space-y-4">
@@ -82,6 +81,21 @@ export default async function EditarTransacaoPage({
                 required
                 className="w-full border border-slate-200 p-3 rounded-xl outline-none focus:ring-2 focus:ring-rose-400 focus:border-transparent transition text-slate-900"
               />
+            </div>
+
+            <div>
+              <label className="text-xs font-medium text-slate-500 mb-1 block">Categoria</label>
+              <select
+                name="categoria"
+                defaultValue={transacao.categoria ?? 'outros'}
+                className="w-full border border-slate-200 p-3 rounded-xl outline-none focus:ring-2 focus:ring-rose-400 focus:border-transparent transition text-slate-900 bg-white"
+              >
+                {CATEGORIAS.map((c) => (
+                    <option key={c.valor} value={c.valor}>
+                        {c.label}
+                    </option>
+                ))}
+              </select>
             </div>
 
             <div>

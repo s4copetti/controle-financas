@@ -1,6 +1,7 @@
 import Link from 'next/link';
-import { Playfair_Display, Lora } from 'next/font/google';
+import { Playfair_Display } from 'next/font/google';
 import { criarTransacao } from '@/app/actions/transacoes';
+import { CATEGORIAS } from '@/lib/categorias';
 
 const playfair = Playfair_Display({
   subsets: ['latin'],
@@ -8,16 +9,9 @@ const playfair = Playfair_Display({
   weight: ['700'],
 });
 
-const lora = Lora({
-  subsets: ['latin'],
-  style: ['italic'],
-  weight: ['400'],
-});
-
 export default function NovaTransacaoPage() {
   return (
     <main className="relative min-h-screen overflow-hidden bg-gradient-to-br from-rose-50 via-pink-50 to-rose-100 flex items-center justify-center p-4 sm:p-8">
-      {/* Formas decorativas de fundo */}
       <div className="absolute -top-10 -left-10 w-72 h-72 bg-rose-200/50 rounded-[40%_60%_60%_40%/40%_40%_60%_60%] blur-sm" />
       <div className="absolute -bottom-16 -right-16 w-80 h-80 bg-pink-200/50 rounded-[60%_40%_40%_60%/60%_60%_40%_40%] blur-sm" />
 
@@ -41,7 +35,7 @@ export default function NovaTransacaoPage() {
             </span>
             <div>
               <h1 className={`${playfair.className} text-2xl text-rose-600`}>Nova transação</h1>
-              <p className={`${lora.className} text-xs text-slate-400`}>Registre uma receita ou despesa</p>
+              <p className="text-xs text-slate-400">Registre uma receita ou despesa</p>
             </div>
           </div>
 
@@ -68,6 +62,21 @@ export default function NovaTransacaoPage() {
                 required
                 className="w-full border border-slate-200 p-3 rounded-xl outline-none focus:ring-2 focus:ring-rose-400 focus:border-transparent transition text-slate-900"
               />
+            </div>
+
+            <div>
+              <label className="text-xs font-medium text-slate-500 mb-1 block">Categoria</label>
+              <select
+                name="categoria"
+                defaultValue="outros"
+                className="w-full border border-slate-200 p-3 rounded-xl outline-none focus:ring-2 focus:ring-rose-400 focus:border-transparent transition text-slate-900 bg-white"
+              >
+                {CATEGORIAS.map((c) => (
+                  <option key={c.valor} value={c.valor}>
+                    {c.label}
+                  </option>
+                ))}
+              </select>
             </div>
 
             <div>
